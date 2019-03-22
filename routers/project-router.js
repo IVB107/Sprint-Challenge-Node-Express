@@ -18,15 +18,35 @@ router.get('/', (req, res) => {
     })
 });
 
-// GET ==> /api/projects/:id
+// // GET --> /api/projects/:id
+// router.get('/:id', (req, res) => {
+//   const { id } = req.params;
+
+//   if (!id){
+//     return res.status(404).json({ message: "No projects with specified ID." });
+//   }
+
+//   db.get(id)
+//     .then(project => {
+//       return !project
+//       ? res.status(404).json({ message: "No projects with specified ID." })
+//       : res.status(200).json(project);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status(500);
+//     })
+// });
+
+// GET --> /api/projects/:id
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  db.get(id)
+  db.getProjectActions(id)
     .then(project => {
-      return !project || !project === id
-      ? res.status(404).json({ message: "No projects with specified ID." })
-      : res.status(200).json(project);
+      return !project[0]
+        ? res.status(404).json({ message: "No projects with specified ID." })
+        : res.status(200).json(project);
     })
     .catch(err => {
       console.log(err);

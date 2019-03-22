@@ -24,9 +24,9 @@ router.get('/:id', (req, res) => {
 
   db.get(id)
     .then(project => {
-      return project
-        ? res.status(200).json(project)
-        : res.status(404).json({ message: "No projects with specified ID." });
+      return !project || !project === id
+      ? res.status(404).json({ message: "No projects with specified ID." })
+      : res.status(200).json(project);
     })
     .catch(err => {
       console.log(err);
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
   const newProject = req.body;
 
   return !name || !description
-    ? res.status(400).json({ message: "Please provide the following keys: name, description" })
+    ? res.status(400).json({ message: "Please provide the following keys: name, description." })
     : db.insert(newProject)
       .then(action => {
         res.status(200).json(action)
@@ -55,8 +55,22 @@ router.post('/', (req, res) => {
 // PUT --> /api/projects/:id
 router.put('/:id', (req, res) => {
   const { id } = req.params;
+  const changes = req.body;
 
-  // Stuff
+  if ( !changes.name || !changes.description ){
+    return res.status(400).json({ message: "Please provide the following keys: name, description." })
+  }
+
+  return !id
+    ? res.status(404).json({ message: "No project under the specified ID." })
+    : db.update(id, changes)
+      .then(updated => {
+        res.status(200).json(updated);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500);
+      })
 })
 
 // DELETE --> /api/projects/:id

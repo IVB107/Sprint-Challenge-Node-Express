@@ -59,7 +59,14 @@ router.post('/', (req, res) => {
 // PUT --> /api/actions/:id
 router.put('/:id', (req, res) => {
   const { id } = req.params;
+  const { project_id, description, notes } = req.body;
   const changes = req.body;
+
+  if ( !project_id || !description || !notes ){
+    return res.status(400).json({ message: "Please provide the following keys: project_id, description, notes" });
+  } else if ( description.length >= 129 ){
+    return res.status(400).json({ message: "Invalid: 'Description string must be 128 characters or less." });
+  }
 
   return !id
     ? res.status(404).json({ message: "No action under the specified ID" })

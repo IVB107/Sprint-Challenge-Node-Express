@@ -26,13 +26,24 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+  1. How to write custom middleware/error handling
+  2. How to utilize routing and create/select specific request handlers based on the URL or request type
+
 - [ ] Describe Middleware?
+
+  Middleware is a list or array of functions that get executed in the order that they are written in  the server code, and acts as a sort of bridge or ‘middleman’ between an application and a database/server.
 
 - [ ] Describe a Resource?
 
+  A resource is a place inside a database/server that contains data. Applications can access this data via CRUD operations to a specific endpoint/route.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+  The API should return an HTTP status code of 200 (OK/Success)
+
 - [ ] How can we partition our application into sub-applications?
+
+  Through use of server-side routing and RESTful architectural design, applications can extend their functionality/complexity by providing different routes to be handled by middleware.
 
 ## Project Setup
 

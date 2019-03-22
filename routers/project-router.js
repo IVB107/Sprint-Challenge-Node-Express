@@ -8,7 +8,14 @@ const router = express.Router();
 
 // GET --> /api/projects
 router.get('/', (req, res) => {
-  // Stuff
+  db.get()
+    .then(projects => {
+      res.status(200).json(projects);
+    })
+    .catch(err =>{
+      console.log(err);
+      res.status(500);
+    })
 });
 
 // GET ==> /api/projects/:id

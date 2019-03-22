@@ -4,6 +4,7 @@ const db = require('../data/helpers/actionModel.js');
 
 const router = express.Router();
 
+
 // Request Handlers
 
 // GET --> /api/actions
@@ -19,13 +20,21 @@ router.get('/', (req, res) => {
     })
 });
 
-// --- this method for project router only?? ---
 // GET ==> /api/actions/:id
-// router.get('/:id', (req, res) => {
-//   const { id } = req.params;
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
 
-//   // Stuff
-// });
+  db.get(id)
+    .then(action => {
+      return action
+        ? res.status(200).json(action)
+        : res.status(404).json({ message: "No actions with specified ID." });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500);
+    })
+});
 
 // POST --> /api/actions
 router.post('/', (req, res) => {
@@ -62,8 +71,6 @@ router.put('/:id', (req, res) => {
         console.log(err);
         res.status(500);
       })
-
-
 })
 
 // DELETE --> /api/actions/:id

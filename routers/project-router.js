@@ -77,7 +77,16 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
-  // Stuff
+  return !id  
+    ? res.status(404).json({ message: "No project under the specified ID." })
+    : db.remove(id)
+      .then(project => {
+      res.status(200).json(project);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500);
+    })
 })
 
 

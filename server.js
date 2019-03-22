@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const cors = require('cors');
 
 const actionRouter = require('./routers/action-router.js');
 const projectRouter = require('./routers/project-router.js');
@@ -10,6 +11,7 @@ const server = express();
 
 server.use(express.json());
 server.use(helmet());
+server.use(cors());
 
 // Routing
 
